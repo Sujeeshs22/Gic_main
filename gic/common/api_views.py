@@ -1,9 +1,12 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from common_config_app.views import generate_response
-from .api_serializers import FileUploadSerializer, UserSerializer
+from .api_serializers import FileUploadSerializer, UserProfileSerializer
 import pandas as pd
-from .models import *
+from .models import Profile
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 class FileUploadViewset(viewsets.ViewSet):
@@ -39,12 +42,16 @@ class FileUploadViewset(viewsets.ViewSet):
                     "age": row.get("age", ""),
                 }
 
-                serializer = UserSerializer(data=row_data)
+                serializer = UserProfileSerializer(data=row_data)
                 if serializer.is_valid():
-                    if not User.objects.filter(email=row_data["email"]).exists():
-                        User.objects.create(
-                            name=row_data["name"],
-                            email=row_data["email"],
+                    if not Profile.objects.filter(
+                        user__email=row_data["email"]
+                    ).exists():
+                        Profile.objects.create(
+                            user=User.objects.create(
+                                email=row_data["email"],
+                                username=row_data["name"],
+                            ),
                             age=row_data["age"],
                         )
                         success_count += 1
