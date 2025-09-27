@@ -50,7 +50,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "common.middlewares.api_ratelimit.RateLimitMiddleware",
 ]
 
 ROOT_URLCONF = "gic.urls"
