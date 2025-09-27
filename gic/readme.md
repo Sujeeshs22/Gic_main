@@ -29,10 +29,10 @@ Run the migrations:
 python manage.py makemigrations
 python manage.py migrate
 
-**Important:**
-if issues with migrating models: 
-  run - "python manage.py makemigrations common"
-  python manage.py migrate
+[!IMPORTANT]:
+If you encounter issues detecting models, run:
+run - "python manage.py makemigrations common"
+python manage.py migrate
 
 Tables will be created in the default SQLite database.
 
